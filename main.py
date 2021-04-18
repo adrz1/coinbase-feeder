@@ -6,9 +6,7 @@ import json
 import redis
 
 DEBUG = os.environ.get("DEBUG", "").lower().startswith("y")
-
-#TODO: config redis and notify if error
-redis_conn = redis.Redis(charset="utf-8", decode_responses=True)
+REDIS_HOST = os.environ.get("REDIS_HOST", "localhost")
 
 log = logging.getLogger(__name__)
 if DEBUG:
@@ -16,6 +14,9 @@ if DEBUG:
 else:
     logging.basicConfig(level=logging.INFO)
     logging.getLogger("requests").setLevel(logging.WARNING)
+
+logging.debug("Conecting to redis on {REDIS_HOST}".format(REDIS_HOST = REDIS_HOST))
+redis_conn = redis.Redis(host=REDIS_HOST)
 
 def get_exchange_rates():#TODO: notify if X consecutive errors or expose metrics
     log.debug("Requesting exchange rates")

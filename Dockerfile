@@ -7,7 +7,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY main.py ./
 
 ARG DEBUG=n
-
 ENV DEBUG=$DEBUG
 
 ENTRYPOINT ["python", "main.py"]
